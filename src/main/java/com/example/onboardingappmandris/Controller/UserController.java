@@ -1,6 +1,8 @@
 package com.example.onboardingappmandris.Controller;
 
 import com.example.onboardingappmandris.DTO.LoginRequest;
+import com.example.onboardingappmandris.DTO.UserDTO;
+import com.example.onboardingappmandris.Entity.User;
 import com.example.onboardingappmandris.Exceptions.Login.IncorrectPasswordException;
 import com.example.onboardingappmandris.Exceptions.Register.UserNameTakenException;
 import com.example.onboardingappmandris.Exceptions.Login.UserNotFoundException;
@@ -9,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @CrossOrigin("*")
 @RestController
@@ -21,6 +26,11 @@ public class UserController {
         this.userService = userService;
     }
 
+
+    @GetMapping()
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+        return ResponseEntity.ok(userService.getAllUsers());
+    }
     @PutMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody LoginRequest loginRequest) {
         userService.registerUser(loginRequest.getUserName(), loginRequest.getPassword());
@@ -28,8 +38,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody LoginRequest loginRequest) {
-        userService.authenticateUser(loginRequest.getUserName(), loginRequest.getPassword());
-        return ResponseEntity.ok("Login successful");
+    public ResponseEntity<Long> loginUser(@RequestBody LoginRequest loginRequest) {
+        Long userId = userService.authenticateUser(loginRequest.getUserName(), loginRequest.getPassword());
+        return ResponseEntity.ok(userId);
     }
 }
