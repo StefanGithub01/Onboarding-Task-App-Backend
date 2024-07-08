@@ -20,7 +20,6 @@ public class User {
     private String username;
     private String password;
 
-    // Constructor with fields excluding id for convenience
     public User(String username, String password) {
         this.username = username;
         this.password = password;

@@ -8,6 +8,7 @@ import com.example.onboardingappmandris.Repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,5 +34,8 @@ public class TaskService {
         return Status.values();
     }
 
+    public List<Task> searchTasks(SearchTask searchTask) {
+        return taskRepository.searchTasks(searchTask.getUserId(), searchTask.getSubject(),searchTask.getDueDateAfter(), searchTask.getStatus());
+    }
 
 }

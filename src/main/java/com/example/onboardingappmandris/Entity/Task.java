@@ -18,6 +18,7 @@ public class Task {
     private Long id;
     @Column(nullable = false, length = 100)
     private String subject;
+    @Temporal(TemporalType.DATE)
     private Date dueDate;
     @Enumerated(value = EnumType.STRING)
     private Status status;

@@ -1,15 +1,17 @@
 package com.example.onboardingappmandris.Controller;
 
+import com.example.onboardingappmandris.DTO.SearchTaskDTO;
 import com.example.onboardingappmandris.Entity.Status;
 import com.example.onboardingappmandris.Entity.Task;
+import com.example.onboardingappmandris.Service.SearchTask;
 import com.example.onboardingappmandris.Service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
+import com.example.onboardingappmandris.Controller.SearchTaskMapperImpl;
+import com.example.onboardingappmandris.Controller.SearchTaskMapperImpl;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,10 +19,12 @@ import java.util.List;
 @RequestMapping("/api/tasks")
 public class TaskController {
     private final TaskService taskService;
+    private final SearchTaskMapper searchTaskMapper;
 
     @Autowired
-    public TaskController(TaskService taskService) {
+    public TaskController(TaskService taskService, SearchTaskMapper searchTaskMapper) {
         this.taskService = taskService;
+        this.searchTaskMapper = searchTaskMapper;
     }
 
     @GetMapping()
@@ -36,5 +40,13 @@ public class TaskController {
     public ResponseEntity<Status[]> getStatuses() {
         return ResponseEntity.ok(taskService.getStatues());
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Task>> searchTasks(SearchTaskDTO searchTaskDTO){
+        List<Task> tasks = taskService.searchTasks(searchTaskMapper.mapToSearchTask(searchTaskDTO));
+        return ResponseEntity.ok(tasks);
+    }
+
+
 
 }
