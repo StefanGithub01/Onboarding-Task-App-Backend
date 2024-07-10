@@ -10,5 +10,4 @@ public class TaskDTO {
     private String dueDate;
     private String status;
     private String assignedUserName;
-
 }

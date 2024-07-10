@@ -1,6 +1,5 @@
 package com.example.onboardingappmandris.DTO;
 
-
 import lombok.Getter;
 import lombok.Setter;
 

@@ -23,5 +23,4 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleIncorrectPasswordException(IncorrectPasswordException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
     }
-
 }

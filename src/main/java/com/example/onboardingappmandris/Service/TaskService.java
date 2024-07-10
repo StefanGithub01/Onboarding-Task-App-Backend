@@ -9,7 +9,6 @@ import com.example.onboardingappmandris.Exceptions.UserHasNoTasksAssignedExcepti
 import com.example.onboardingappmandris.Repository.TaskRepository;
 import com.example.onboardingappmandris.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -55,6 +54,7 @@ public class TaskService {
 
         return taskRepository.save(task);
     }
+
     public List<Task> getAllTasks() {
         Optional<List<Task>> optionalTasks = Optional.of(taskRepository.findAll());
         return optionalTasks.orElseThrow(() -> new NoTasksFoundException("No tasks found"));
@@ -69,11 +69,10 @@ public class TaskService {
     }
 
     public List<Task> searchTasks(SearchTask searchTask) {
-        return taskRepository.searchTasks(searchTask.getUserId(), searchTask.getSubject(),searchTask.getDueDateAfter(), searchTask.getStatus());
+        return taskRepository.searchTasks(searchTask.getUserId(), searchTask.getSubject(), searchTask.getDueDateAfter(), searchTask.getStatus());
     }
 
     public Task getTaskById(Long id) {
         return taskRepository.findById(id).orElseThrow(() -> new NoTasksFoundException("No task found"));
     }
-
 }
